@@ -20,7 +20,7 @@ setup(
         long_description_content_type="text/markdown",
         classifiers=[
             "Development Status :: 4 - Beta",
-            "Programming Language :: Python ::3",
+            "Programming Language :: Python :: 3",
         ],
         keywords="http zip unzip",
         author="Saul Pwanson",
