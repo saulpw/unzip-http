@@ -1,4 +1,4 @@
-# SPDX-License-Identifier:
+# SPDX-License-Identifier: MIT
 
 from setuptools import setup
 
@@ -27,7 +27,6 @@ setup(
         url="https://github.com/saulpw/unzip-http",
         python_requires=">=3.8",
         py_modules=["unzip_http"],
-        packages=["unzip-http"],
         scripts=["unzip-http"],
         install_requires=requirements(),
 )

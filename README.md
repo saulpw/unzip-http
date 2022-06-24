@@ -1,6 +1,6 @@
 # unzip-http
 
-Extract files from .zip files over http without downloading the entire archive.
+Extract individual files from .zip files over http without downloading the entire archive.
 
 ## Install
 
