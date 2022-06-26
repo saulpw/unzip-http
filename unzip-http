@@ -48,7 +48,7 @@ def main(url, *globs):
     rzf = unzip_http.RemoteZipFile(url)
     for f in rzf.infolist():
         if not globs:
-            print(f'{f.compress_size/2**20:.02f}MB -> {f.file_size/2**20:.02f}MB  {f.filename}')
+            print(f'{f.compress_size} -> {f.file_size}  {f.filename}')
         elif any(fnmatch.fnmatch(f.filename, g) for g in globs):
             fp = StreamProgress(rzf.open(f), name=f.filename, total=f.compress_size)
             while r := fp.read(2**18):

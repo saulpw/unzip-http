@@ -116,6 +116,7 @@ class RemoteZipStream(io.RawIOBase):
         while n > len(self._buffer):
             r = self.raw.read(2**18)
             if not r:
+                self._buffer += self._decompressor.flush()
                 break
             self._buffer += self._decompressor.decompress(r)
 
