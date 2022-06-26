@@ -66,7 +66,7 @@ class RemoteZipFile:
             yield RemoteZipInfo(filename.decode(), date_time, local_header_ofs, method, complen, uncomplen)
 
     def get_range(self, start, n):
-        return self.http.request('GET', self.url, headers={'Range': f'bytes={start}-{start+n}'}, preload_content=False)
+        return self.http.request('GET', self.url, headers={'Range': f'bytes={start}-{start+n-1}'}, preload_content=False)
 
     def matching_files(self, *globs):
         for f in self.files.values():
