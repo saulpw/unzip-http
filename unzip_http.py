@@ -9,6 +9,8 @@ import fnmatch
 
 import urllib3
 
+__version__ = '0.2'
+
 
 def error(s):
     raise Exception(s)
