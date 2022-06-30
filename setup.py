@@ -14,7 +14,7 @@ def requirements():
 
 setup(
         name="unzip-http",
-        version="0.1",
+        version="0.2",
         description="extract files from .zip files over http without downloading entire archive",
         long_description=readme(),
         long_description_content_type="text/markdown",
