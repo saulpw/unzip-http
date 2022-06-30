@@ -71,9 +71,7 @@ class RemoteZipFile:
         sz = int(resp.headers['Content-Length'])
         resp = self.get_range(sz-65536, 65536)
 
-        eocdloc = eocd = eocd64 = None
-
-        cdir_start = 0
+        cdir_start = -1
         i = resp.data.rfind(b'\x50\x4b\x06\x06')
         if i >= 0:
             magic, eocd_sz, create_ver, min_ver, disk_num, disk_start, disk_num_records, total_num_records, \
@@ -85,7 +83,7 @@ class RemoteZipFile:
                     disk_num, disk_start, disk_num_records, total_num_records, \
                     cdir_bytes, cdir_start, comment_len = struct.unpack_from(self.fmt_eocd, resp.data, offset=i)
 
-        if cdir_start <= 0 or cdir_start > sz:
+        if cdir_start < 0 or cdir_start >= sz:
             error('cannot find central directory')
 
         filehdr_index = 65536 - (sz - cdir_start)
