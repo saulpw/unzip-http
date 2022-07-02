@@ -1,19 +1,20 @@
-from dataclasses import dataclass
-
-import sys
-import io
-import time
-import zlib
-import struct
 import fnmatch
+import io
+import struct
+import zlib
+from dataclasses import dataclass
 
 import urllib3
 
-__version__ = '0.2'
+__version__ = '0.3'
 
 
 def error(s):
     raise Exception(s)
+
+
+SIG_EOCD   = b'PK\x05\x06'
+SIG_EOCD64 = b'PK\x06\x06'
 
 
 @dataclass
@@ -59,10 +60,14 @@ class RemoteZipFile:
     def __init__(self, url):
         self.url = url
         self.http = urllib3.PoolManager()
+        self.zip_size = 0
+
+        # remote reading all files
+        self.zip_entries = {r.filename: r for r in self.infolist()}
 
     @property
     def files(self):
-        return {r.filename:r for r in self.infolist()}
+        return self.zip_entries
 
     def infolist(self):
         resp = self.http.request('HEAD', self.url)
@@ -70,25 +75,25 @@ class RemoteZipFile:
         if r != 'bytes':
             error(f"Accept-Ranges header must be 'bytes' ('{r}')")
 
-        sz = int(resp.headers['Content-Length'])
-        resp = self.get_range(sz-65536, 65536)
+        self.zip_size = int(resp.headers['Content-Length'])
+        resp = self.get_range(self.zip_size-0xffff, 0xffff)
 
         cdir_start = -1
-        i = resp.data.rfind(b'\x50\x4b\x06\x06')
+        i = resp.data.rfind(SIG_EOCD64)
         if i >= 0:
             magic, eocd_sz, create_ver, min_ver, disk_num, disk_start, disk_num_records, total_num_records, \
                 cdir_bytes, cdir_start = struct.unpack_from(self.fmt_eocd64, resp.data, offset=i)
         else:
-            i = resp.data.rfind(b'\x50\x4b\x05\x06')
+            i = resp.data.rfind(SIG_EOCD)
             if i >= 0:
                 magic, \
                     disk_num, disk_start, disk_num_records, total_num_records, \
                     cdir_bytes, cdir_start, comment_len = struct.unpack_from(self.fmt_eocd, resp.data, offset=i)
 
-        if cdir_start < 0 or cdir_start >= sz:
+        if cdir_start < 0 or cdir_start >= self.zip_size:
             error('cannot find central directory')
 
-        filehdr_index = 65536 - (sz - cdir_start)
+        filehdr_index = 0xffff - (self.zip_size - cdir_start)
         cdir_end = filehdr_index + cdir_bytes
         while filehdr_index < cdir_end:
             sizeof_cdirentry = struct.calcsize(self.fmt_cdirentry)
