@@ -81,11 +81,20 @@ class RemoteZipFile:
         self.url = url
         self.http = urllib3.PoolManager()
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, a, b, c):
+        pass
+
     @functools.cached_property
     def files(self):
-        return {r.filename:r for r in self.infolist()}
+        return {r.filename:r for r in self.infoiter()}
 
     def infolist(self):
+        return list(self.infoiter())
+
+    def infoiter(self):
         resp = self.http.request('HEAD', self.url)
         r = resp.headers.get('Accept-Ranges', '')
         if r != 'bytes':
