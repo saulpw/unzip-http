@@ -14,7 +14,7 @@ def requirements():
 
 setup(
         name="unzip-http",
-        version="0.2",
+        version="0.3",
         description="extract files from .zip files over http without downloading entire archive",
         long_description=readme(),
         long_description_content_type="text/markdown",
@@ -25,7 +25,7 @@ setup(
         keywords="http zip unzip",
         author="Saul Pwanson",
         url="https://github.com/saulpw/unzip-http",
-        python_requires=">=3.7",
+        python_requires=">=3.8",
         py_modules=["unzip_http"],
         scripts=["unzip-http"],
         install_requires=requirements(),
