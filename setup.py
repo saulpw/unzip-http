@@ -25,7 +25,7 @@ setup(
         keywords="http zip unzip",
         author="Saul Pwanson",
         url="https://github.com/saulpw/unzip-http",
-        python_requires=">=3.8",
+        python_requires=">=3.7",
         py_modules=["unzip_http"],
         scripts=["unzip-http"],
         install_requires=requirements(),
