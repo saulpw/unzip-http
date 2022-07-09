@@ -20,16 +20,19 @@
 
 from dataclasses import dataclass
 
+import os
 import sys
 import io
 import time
 import zlib
 import struct
 import fnmatch
+import pathlib
+import urllib.parse
 
 import urllib3
 
-__version__ = '0.3'
+__version__ = '0.4'
 
 
 def error(s):
@@ -98,11 +101,15 @@ class RemoteZipFile:
     def infolist(self):
         return list(self.infoiter())
 
+    def namelist(self):
+        return list(r.filename for r in self.infoiter())
+
     def infoiter(self):
         resp = self.http.request('HEAD', self.url)
         r = resp.headers.get('Accept-Ranges', '')
         if r != 'bytes':
-            error(f"Accept-Ranges header must be 'bytes' ('{r}')")
+            hostname = urllib.parse.urlparse(self.url).netloc
+            error(f"{hostname} does not support HTTP range requests (Accept-Ranges header ('{r}') is not 'bytes')")
 
         self.zip_size = int(resp.headers['Content-Length'])
         resp = self.get_range(self.zip_size-65536, 65536)
@@ -147,6 +154,19 @@ class RemoteZipFile:
 
             rzi.parse_extra(extra)
             yield rzi
+
+    def extractall(self, path, members=None):
+        path = path or pathlib.Path('.')
+        for fn in members or self.namelist():
+            outpath = path/fn
+            os.makedirs(outpath.parent, exist_ok=True)
+            with self.open(fn) as fpin:
+                with open(path/fn, mode='wb') as fpout:
+                    while True:
+                        r = fpin.read(65536)
+                        if not r:
+                            break
+                        fpout.write(r)
 
     def get_range(self, start, n):
         return self.http.request('GET', self.url, headers={'Range': f'bytes={start}-{start+n-1}'}, preload_content=False)

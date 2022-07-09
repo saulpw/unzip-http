@@ -10,7 +10,7 @@ Extract individual files from .zip files over http without downloading the entir
 
     unzip-http <url.zip> <filenames..>
 
-Extract <filenames> from a remote .zip at <url> to stdout.
+Extract <filenames> from a remote .zip at `<url>` to stdout.
 
 If no filenames given, displays .zip contents (filenames and sizes).
 
