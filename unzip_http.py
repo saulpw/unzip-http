@@ -32,7 +32,7 @@ import urllib.parse
 
 import urllib3
 
-__version__ = '0.4dev'
+__version__ = '0.4'
 
 
 def error(s):

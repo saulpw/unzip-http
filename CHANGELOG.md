@@ -1,5 +1,14 @@
 # unzip-http version history
 
+# v0.4 (2022-07-13)
+
+- expand support for the unzip_http library to Python v3.6
+
+## API
+
+* parse date_time in ZipInfo
+* add RemoveZipFile.extractall()
+
 # v0.3 (2022-07-06)
 
 * add MIT license to file to make it vendorable
