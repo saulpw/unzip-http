@@ -29,7 +29,7 @@ import urllib.parse
 
 import urllib3
 
-__version__ = '0.4'
+__version__ = '0.5'
 
 
 def error(s):
