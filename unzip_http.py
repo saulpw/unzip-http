@@ -18,6 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import sys
 import os
 import io
 import zlib
@@ -34,6 +35,8 @@ __version__ = '0.4'
 def error(s):
     raise Exception(s)
 
+def warning(s):
+    print(s, file=sys.stderr)
 
 def get_bits(val:int, *args):
     'Generate bitfields (one for each arg) from LSB to MSB.'
@@ -120,7 +123,7 @@ class RemoteZipFile:
         r = resp.headers.get('Accept-Ranges', '')
         if r != 'bytes':
             hostname = urllib.parse.urlparse(self.url).netloc
-            error(f"{hostname} does not support HTTP range requests (Accept-Ranges header ('{r}') is not 'bytes')")
+            warning(f"{hostname} Accept-Ranges header ('{r}') is not 'bytes'--trying anyway")
 
         self.zip_size = int(resp.headers['Content-Length'])
         resp = self.get_range(self.zip_size-65536, 65536)
