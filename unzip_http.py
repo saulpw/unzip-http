@@ -141,6 +141,11 @@ class RemoteZipFile:
             error('cannot find central directory')
 
         filehdr_index = 65536 - (self.zip_size - cdir_start)
+
+        if filehdr_index < 0:
+            resp = self.get_range(cdir_start, self.zip_size - cdir_start)
+            filehdr_index = 0
+
         cdir_end = filehdr_index + cdir_bytes
         while filehdr_index < cdir_end:
             sizeof_cdirentry = struct.calcsize(self.fmt_cdirentry)
