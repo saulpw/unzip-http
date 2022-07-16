@@ -215,12 +215,12 @@ class RemoteZipFile:
             return self.get_range(f.header_offset + sizeof_localhdr + fnlen + extralen, f.compress_size)
         elif method == 8: # DEFLATE
             resp = self.get_range(f.header_offset + sizeof_localhdr + fnlen + extralen, f.compress_size)
-            return RemoteZipStream(resp, f)
+            return io.BufferedReader(RemoteZipStream(resp, f))
         else:
             error(f'unknown compression method {method}')
 
     def open_text(self, fn):
-        return io.TextIOWrapper(io.BufferedReader(self.open(fn)))
+        return io.TextIOWrapper(self.open(fn))
 
 
 class RemoteZipStream(io.RawIOBase):
