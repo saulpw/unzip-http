@@ -62,6 +62,9 @@ class RemoteZipInfo:
         sec, mins, hour, day, mon, year = get_bits(date_time, 5, 6, 5, 5, 4, 7)
         self.date_time = (year+1980, mon, day, hour, mins, sec)
 
+    def is_dir(self):
+        return self.filename.endswith('/')
+
     def parse_extra(self, extra):
         i = 0
         while i < len(extra):
