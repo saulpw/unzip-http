@@ -26,7 +26,6 @@ import fnmatch
 import pathlib
 import urllib.parse
 
-import urllib3
 
 __version__ = '0.4'
 
@@ -93,6 +92,7 @@ class RemoteZipFile:
     magic_eocd = b'\x50\x4b\x05\x06'
 
     def __init__(self, url):
+        import urllib3
         self.url = url
         self.http = urllib3.PoolManager()
         self.zip_size = 0
