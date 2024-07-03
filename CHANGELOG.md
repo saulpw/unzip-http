@@ -1,9 +1,10 @@
 # unzip-http version history
 
-# v0.5 ()
+# v0.5.1 ()
 
-* handle large (>64k) central dir
-* only warn on missing Accept-Ranges header
+- add RemoteZipInfo.extract() method
+- handle large (>64k) central dir
+- only warn on missing Accept-Ranges header
   - e.g. S3 does not send it but still supports Range Requests
 
 # v0.4 (2022-07-13)
