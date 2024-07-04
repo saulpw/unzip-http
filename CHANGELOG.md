@@ -1,6 +1,6 @@
 # unzip-http version history
 
-# v0.5.1 ()
+# v0.5.1 (2024-07-03)
 
 - add RemoteZipInfo.extract() method
 - handle large (>64k) central dir
