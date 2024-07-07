@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 """
-usage: unzip-http [-h] [-l] [-f] [-o] url [files ...]
+usage: unzip_http [-h] [-l] [-f] [-o] url [files ...]
 
 Extract individual files from .zip files over http without downloading the
 entire archive. HTTP server must send `Accept-Ranges: bytes` and
@@ -56,7 +56,7 @@ import pathlib
 import urllib.parse
 
 
-__version__ = '0.5.1'
+__version__ = '0.6'
 
 
 def error(s):
@@ -356,14 +356,6 @@ def download_file(f, rzf, args):
             extract_one(of, rzf, f, str(path))
 
 
-def run(args):
-    rzf = RemoteZipFile(args.url[0])
-    if args.list or len(args.files) == 0:
-        list_files(rzf)
-    else:
-        for f in rzf.infolist():
-            download_file(f, rzf, args)
-
 def main():
     parser = argparse.ArgumentParser(prog='unzip-http', \
         description="Extract individual files from .zip files over http without downloading the entire archive. HTTP server must send `Accept-Ranges: bytes` and `Content-Length` in headers.")
@@ -379,7 +371,13 @@ def main():
     parser.add_argument("files", nargs='*', help="Files to extract. If no filenames given, displays .zip contents (filenames and sizes). Each filename can be a wildcard glob.")
 
     args = parser.parse_args()
-    run(args)
+
+    rzf = RemoteZipFile(args.url[0])
+    if args.list or len(args.files) == 0:
+        list_files(rzf)
+    else:
+        for f in rzf.infolist():
+            download_file(f, rzf, args)
 
 
 
