@@ -1,5 +1,10 @@
 # unzip-http version history
 
+# v0.6 (2024-07-06)
+
+- change executable to `unzip_http`
+- add support for `unzip_http.py` executable for Windows  #17
+
 # v0.5.1 (2024-07-03)
 
 - add RemoteZipInfo.extract() method
