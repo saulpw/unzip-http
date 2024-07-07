@@ -28,4 +28,4 @@ jobs:
       run: |
         python setup.py develop
     - name: Run basic test
-      run: unzip-http http://psa.download.navigation.com/automotive/PSA/RT6-SMEGx/M49RG20-Q0420-2001.ZIP DATA/CURR_VERS_NAVI.TXT
+      run: unzip_http.py http://psa.download.navigation.com/automotive/PSA/RT6-SMEGx/M49RG20-Q0420-2001.ZIP DATA/CURR_VERS_NAVI.TXT
