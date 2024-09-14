@@ -35,3 +35,8 @@ Options:
 # Credits
 
 `unzip-http` was written by [Saul Pwanson](https://saul.pw) and made available for use under the MIT License.
+
+# Similar Libraries
+
+- [python-remotezip](https://github.com/gtsystem/python-remotezip)
+- [PyRemoteZip](https://github.com/fcvarela/pyremotezip)
