@@ -219,7 +219,7 @@ class RemoteZipFile:
 
             outpath = path/member
             os.makedirs(outpath.parent, exist_ok=True)
-            with self.open(member) as fpin:
+            with self._open(member) as fpin:
                 with open(path/member, mode='wb') as fpout:
                     while True:
                         r = fpin.read(65536)
@@ -239,7 +239,7 @@ class RemoteZipFile:
             if any(fnmatch.fnmatch(f.filename, g) for g in globs):
                 yield f
 
-    def open(self, fn):
+    def _open(self, fn):
         if isinstance(fn, str):
             f = list(self.matching_files(fn))
             if not f:
@@ -260,8 +260,8 @@ class RemoteZipFile:
         else:
             error(f'unknown compression method {method}')
 
-    def open_text(self, fn):
-        return io.TextIOWrapper(self.open(fn))
+    def open(self, fn):
+        return io.TextIOWrapper(self._open(fn))
 
 
 class RemoteZipStream(io.RawIOBase):
