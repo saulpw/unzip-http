@@ -54,6 +54,7 @@ import fnmatch
 import argparse
 import pathlib
 import urllib.parse
+import zipfile
 
 
 __version__ = '0.6'
@@ -226,6 +227,24 @@ class RemoteZipFile:
                         if not r:
                             break
                         fpout.write(r)
+
+    
+    def extractzip(self, member, path=None, pwd=None):
+        if pwd:
+            raise NotImplementedError('Passwords not supported yet')
+
+        path = path or pathlib.Path('.')
+        outpath = path
+        os.makedirs(outpath.parent, exist_ok=True)
+        with self.open(member) as fpin:
+            with zipfile.ZipFile(outpath, 'a', zipfile.ZIP_DEFLATED) as zout:
+                with zout.open(member,'w') as fpout:
+                    while True:
+                        r = fpin.read(65536)
+                        if not r:
+                            break
+                        fpout.write(r)
+
 
     def extractall(self, path=None, members=None, pwd=None):
         for fn in members or self.namelist():
