@@ -27,4 +27,4 @@ jobs:
     - name: Install unzip-http
       run: pip install -e .
     - name: Run basic test
-      run: unzip_http.py http://psa.download.navigation.com/automotive/PSA/RT6-SMEGx/M49RG20-Q0420-2001.ZIP DATA/CURR_VERS_NAVI.TXT
+      run: unzip_http http://psa.download.navigation.com/automotive/PSA/RT6-SMEGx/M49RG20-Q0420-2001.ZIP DATA/CURR_VERS_NAVI.TXT
