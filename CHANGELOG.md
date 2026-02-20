@@ -1,5 +1,11 @@
 # unzip-http version history
 
+# v0.7 (2026-02-20)
+
+- check HTTP status and Content-Length before parsing zip
+- migrate from setup.py to pyproject.toml
+- support Python 3.10 - 3.14
+
 # v0.6 (2024-07-06)
 
 - change executable to `unzip_http`
