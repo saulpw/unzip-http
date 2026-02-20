@@ -21,7 +21,7 @@ Note: HTTP server must send `Accept-Ranges: bytes` and `Content-Length` in heade
 Options:
 
 - `-l`: List files in remote .zip file (default if no filenames given)
-- `-f`: Recreate folder structure from .zip file when extracting (instead of extracting files to the current directly to the current directory)
+- `-f`: Recreate folder structure from .zip file when extracting (instead of extracting files to the current directory)
 - `-o`: Write files to stdout (if multiple files, concatenate them in zipfile order)
 
 # Python module `unzip_http`
