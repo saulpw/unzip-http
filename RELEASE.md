@@ -7,8 +7,9 @@
 3. Commit: `git commit -am "release vX.Y"`
 4. Tag: `git tag vX.Y`
 5. Push: `git push && git push --tags`
+6. Create GitHub release: `gh release create vX.Y --generate-notes`
 
-GitHub Actions will automatically build and publish to PyPI when the tag is pushed.
+GitHub Actions will automatically build and publish to PyPI when the tag is pushed. Always create the GitHub release **before** the PyPI publish completes so the "latest release" on GitHub stays in sync.
 
 ## One-time setup (already done)
 
