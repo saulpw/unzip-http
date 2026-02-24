@@ -16,7 +16,7 @@ A filename can be a wildcard glob; all matching files are extracted in this case
 
 Specify multiple filenames as distinct arguments (separated with spaces on the command line).
 
-Note: HTTP server must send `Accept-Ranges: bytes` and `Content-Length` in headers (most do).
+Note: HTTP server must support range requests (most do).
 
 Options:
 
@@ -40,3 +40,5 @@ Options:
 
 - [python-remotezip](https://github.com/gtsystem/python-remotezip)
 - [PyRemoteZip](https://github.com/fcvarela/pyremotezip)
+
+Unlike these alternatives, `unzip-http` performs true streaming decompression—compressed data is decompressed incrementally as it arrives, rather than loading entire compressed members into memory.
