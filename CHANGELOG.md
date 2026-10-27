@@ -1,5 +1,10 @@
 # unzip-http version history
 
+# v0.8 (2026-10-27)
+
+- security: refuse zip members that resolve outside the extraction directory (Zip Slip, GHSA-46v6-hfwv-8qq9, CVE-2026-41958)
+- `__version__` matches the package version
+
 # v0.7 (2026-02-20)
 
 - check HTTP status and Content-Length before parsing zip
