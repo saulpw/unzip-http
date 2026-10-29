@@ -1,5 +1,9 @@
 # unzip-http version history
 
+# v0.9 (2026-10-28)
+
+- send User-Agent, Accept, and Connection headers on every request; fixes Wayback Machine URLs (#23)
+
 # v0.8 (2026-10-27)
 
 - security: refuse zip members that resolve outside the extraction directory (Zip Slip, GHSA-46v6-hfwv-8qq9, CVE-2026-41958)

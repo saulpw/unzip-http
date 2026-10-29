@@ -56,7 +56,7 @@ import pathlib
 import urllib.parse
 
 
-__version__ = '0.8'
+__version__ = '0.9'
 
 
 def error(s):
